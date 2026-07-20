@@ -136,3 +136,11 @@ Open http://localhost:8080 and try asking the chat:
 - *What's the minimum credit score for a mortgage?*
 - *Can I refinance my auto loan?*
 - *Compare the late fees across the different loan types.*
+
+### Results
+
+**Knowledge base**
+![Knowledge base](images/knowledge-base.png)
+
+**Chat**
+![Chat](images/chat.png)
