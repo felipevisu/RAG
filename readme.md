@@ -14,7 +14,11 @@ The key idea is that similar things end up close together in this numeric space.
 
 ### Demo 1
 
-* Run Jupyter
+```bash
+python -m venv venv
+venv/bin/pip install -r requirements.txt
+venv/bin/jupyter notebook demo1-embeddings/main.ipynb
+```
 
 ## Part 2 - Explanation
 
