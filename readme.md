@@ -1,5 +1,25 @@
 # RAG - Retrieval-Augmented Generation
 
+## How to run
+
+One-time setup (Python env + shared database):
+
+```bash
+python -m venv venv
+venv/bin/pip install -r requirements.txt
+docker compose up -d      # one PostgreSQL+pgvector instance (port 5433), databases `demo2` and `demo3`
+```
+
+Then per demo:
+
+| Demo | Command | What you get |
+|---|---|---|
+| **Demo 1** — embeddings | `venv/bin/jupyter notebook demo1-embeddings/main.ipynb` | notebook: embed sentences, score in Python |
+| **Demo 2** — pgvector | `venv/bin/jupyter notebook demo2-persist-on-database/main.ipynb` | notebook: SQL does the scoring and sorting |
+| **Demo 3** — full app | `cd demo3-final-project && ../venv/bin/uvicorn src.app:app --reload --port 8080` | http://localhost:8080 — feed + Claude chatbot |
+
+Demo 3 also needs your Anthropic key in `demo3-final-project/.env` (`ANTHROPIC_API_KEY=sk-ant-...`) and, once, `python ingest.py` from that folder to load the sample documents. Details in each part below.
+
 ## Part 1 - Embeddings
 
 ### What is this?
