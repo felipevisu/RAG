@@ -89,3 +89,26 @@ docker compose up -d   # starts PostgreSQL + pgvector on port 5433
 ```
 
 Then open `main.ipynb`: it embeds the sentences with the same Sentence Transformer, inserts them with plain SQL, and lets PostgreSQL do the scoring and the `ORDER BY`.
+
+## Part 4 - Final project: a complete RAG application
+
+Demo 3 (`demo3-final-project/`) puts every piece together into a working app:
+
+- **Feed** — a Twitter-style feed where each entry (your posts + loan policy documents split into sections, tagged by category) is embedded with `BAAI/bge-base-en-v1.5` (768 dims) and persisted in pgvector. The UI shows the stored vector of every entry.
+- **Chat** — a chatbot built with **Claude tool_use**: Claude decides when to call a `search_knowledge_base` tool, PostgreSQL ranks the entries by cosine distance, and Claude writes the answer citing the category it came from.
+
+```bash
+cd demo3-final-project
+# put your key in .env:  ANTHROPIC_API_KEY=sk-ant-...
+docker compose up -d --build   # database + backend + UI
+python ingest.py               # loads documents/*.md into the knowledge base
+```
+
+Open http://localhost:8080 and try asking the chat:
+
+- *What is the name of my dog?* (after posting something about it in the Feed)
+- *What are the loan term ranges for used vehicles?*
+- *What happens if I miss a loan payment?*
+- *What's the minimum credit score for a mortgage?*
+- *Can I refinance my auto loan?*
+- *Compare the late fees across the different loan types.*
