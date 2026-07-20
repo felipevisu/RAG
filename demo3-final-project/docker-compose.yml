@@ -18,7 +18,7 @@ services:
   app:
     build: .
     ports:
-      - "8000:8000"
+      - "8080:8000"
     environment:
       DB_URL: host=db port=5432 dbname=rag user=postgres password=postgres
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
