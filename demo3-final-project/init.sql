@@ -1,0 +1,8 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    embedding VECTOR(384) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
