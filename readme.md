@@ -88,11 +88,10 @@ pgvector ships the distance functions from Part 2 as SQL operators:
 ### Demo 2
 
 ```bash
-cd demo2-persist-on-database
-docker compose up -d   # starts PostgreSQL + pgvector on port 5433
+docker compose up -d   # repo root — one PostgreSQL+pgvector instance (port 5433) shared by demo2 and demo3
 ```
 
-Then open `main.ipynb`: it embeds the sentences with the same Sentence Transformer, inserts them with plain SQL, and lets PostgreSQL do the scoring and the `ORDER BY`.
+Then open `demo2-persist-on-database/main.ipynb`: it embeds the sentences with the same Sentence Transformer, inserts them with plain SQL (database `demo2`), and lets PostgreSQL do the scoring and the `ORDER BY`.
 
 ## Part 4 - Final project: a complete RAG application
 
@@ -102,9 +101,10 @@ Demo 3 (`demo3-final-project/`) puts every piece together into a working app:
 - **Chat** — a chatbot built with **Claude tool_use**: Claude decides when to call a `search_knowledge_base` tool, PostgreSQL ranks the entries by cosine distance, and Claude writes the answer citing the category it came from.
 
 ```bash
+docker compose up -d           # repo root — shared postgres (database `demo3`)
 cd demo3-final-project
 # put your key in .env:  ANTHROPIC_API_KEY=sk-ant-...
-docker compose up -d --build   # database + backend + UI
+../venv/bin/uvicorn src.app:app --reload --port 8080  # backend + UI
 python ingest.py               # loads documents/*.md into the knowledge base
 ```
 

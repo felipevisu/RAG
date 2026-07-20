@@ -28,17 +28,20 @@ The chat runs the classic tool_use loop: call Claude → if `stop_reason == "too
 
 ## Run
 
-Everything runs on docker compose (database + backend + UI):
+Database on docker (shared instance at the repo root), app on localhost:
 
 ```bash
+docker compose up -d      # from the REPO ROOT — postgres serving demo2 + demo3 (port 5433)
+cd demo3-final-project
 # put your key in .env (needed for the Chat tab):
 #   ANTHROPIC_API_KEY=sk-ant-...
-docker compose up -d --build
+../venv/bin/uvicorn src.app:app --reload --port 8080  # backend + UI
+python ingest.py          # load documents/*.md into the knowledge base
 ```
 
 Open http://localhost:8080
 
-> First startup downloads the sentence-transformers model (cached in a volume afterwards). To develop outside docker: keep only the `db` service running and start `../venv/bin/uvicorn src.app:app --reload` from this folder.
+> Dependencies are in the root `requirements.txt`. `.env` is loaded automatically by `src/__init__.py` (a few lines of stdlib — no python-dotenv). This app uses the `demo3` database inside the shared instance; demo2 uses `demo2`. First startup downloads the sentence-transformers model (~440MB, cached afterwards).
 
 - **Feed tab** — write posts; each shows its stored 768-dim vector (click to expand). Embeddings come from `BAAI/bge-base-en-v1.5`.
 - **Chat tab** — ask questions; the UI shows which searches Claude performed before answering.

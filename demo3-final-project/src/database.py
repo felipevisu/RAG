@@ -5,7 +5,7 @@ import os
 import psycopg
 
 DB_URL = os.environ.get(
-    "DB_URL", "host=localhost port=5434 dbname=rag user=postgres password=postgres"
+    "DB_URL", "host=localhost port=5433 dbname=demo3 user=postgres password=postgres"
 )
 
 

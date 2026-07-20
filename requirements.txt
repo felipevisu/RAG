@@ -1,6 +1,8 @@
-# Shared deps for demo1 (notebook) and demo2 (notebook + pgvector).
-# demo3 has its own requirements.txt (installed inside its docker image).
+# All demos share this file.
 #   python -m venv venv && venv/bin/pip install -r requirements.txt
-sentence-transformers
-jupyter
-psycopg[binary]
+sentence-transformers   # demo1/2/3 — embeddings
+jupyter                 # demo1/2 — notebooks
+psycopg[binary]         # demo2/3 — postgres
+fastapi                 # demo3 — API
+uvicorn                 # demo3 — server
+anthropic               # demo3 — Claude chat
